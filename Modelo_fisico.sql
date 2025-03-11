@@ -2,9 +2,9 @@
 CREATE TABLE Funcionario (
     CPF VARCHAR2(11) PRIMARY KEY,
     Telefone VARCHAR2(20),
-    Nome VARCHAR2(100) NOT NULL,
-    Salario NUMBER(10,2) NOT NULL,
-    Cargo VARCHAR2(50) NOT NULL,
+    Nome VARCHAR2(100),
+    Salario NUMBER(10,2),
+    Cargo VARCHAR2(50),
     CPF_Chefe VARCHAR2(11),
     CONSTRAINT FK_Funcionario_Chefe FOREIGN KEY (CPF_Chefe) REFERENCES Funcionario(CPF)
 );
@@ -12,8 +12,8 @@ CREATE TABLE Funcionario (
 -- Tabela Hotel
 CREATE TABLE Hotel (
     CNPJ VARCHAR2(14) PRIMARY KEY,
-    Nome VARCHAR2(100) NOT NULL,
-    Endereco VARCHAR2(200) NOT NULL,
+    Nome VARCHAR2(100),
+    Endereco VARCHAR2(200),
     CPF_Gerente VARCHAR2(11) NOT NULL UNIQUE,
     CONSTRAINT FK_Hotel_Gerente FOREIGN KEY (CPF_Gerente) REFERENCES Funcionario(CPF)
 );
@@ -52,21 +52,21 @@ CREATE TABLE Reserva (
     Check_In DATE,
     Check_Out DATE,
     Num_Hospedes NUMBER,
-    Status VARCHAR2(20) NOT NULL,
-    Valor_Total NUMBER(10,2) NOT NULL
+    Status VARCHAR2(20),
+    Valor_Total NUMBER(10,2)
 );
 
 -- Tabela Cliente
 CREATE TABLE Cliente (
     CPF VARCHAR2(11) PRIMARY KEY,
     Telefone VARCHAR2(20),
-    Nome VARCHAR2(100) NOT NULL
+    Nome VARCHAR2(100)
 );
 
 -- Tabela Setor
 CREATE TABLE Setor (
     ID_Setor VARCHAR2(5) PRIMARY KEY,
-    Nome VARCHAR2(100) NOT NULL,
+    Nome VARCHAR2(100),
     CNPJ VARCHAR2(14) NOT NULL,
     CONSTRAINT FK_Setor_Hotel FOREIGN KEY (CNPJ) REFERENCES Hotel(CNPJ)
 );
@@ -86,9 +86,9 @@ CREATE TABLE Faz_Reserva (
 -- Tabela Pagamento
 CREATE TABLE Pagamento (
     ID_Pag NUMBER PRIMARY KEY,
-    Data DATE NOT NULL,
-    Valor NUMBER(10,2) NOT NULL,
-    Forma_Pag VARCHAR2(50) NOT NULL,
+    Data DATE,
+    Valor NUMBER(10,2),
+    Forma_Pag VARCHAR2(50),
     ID_Res NUMBER,
     ID_Quarto NUMBER,
     CNPJ VARCHAR2(14),
@@ -117,11 +117,9 @@ CREATE TABLE Hotel_Tem_Comodidade (
 -- Tabela Trabalha (Relaciona Funcionário e Setor)
 CREATE TABLE Trabalha (
     CPF_Func VARCHAR2(11),
-    Data_Admissao DATE NOT NULL,
+    Data_Admissao DATE,
     ID_Setor NUMBER NOT NULL,
     PRIMARY KEY (CPF_Func, Data_Admissao),
     CONSTRAINT FK_Trabalha_Funcionario FOREIGN KEY (CPF_Func) REFERENCES Funcionario(CPF),
     CONSTRAINT FK_Trabalha_Setor FOREIGN KEY (ID_Setor) REFERENCES Setor(ID_Setor)
 );
-
-
