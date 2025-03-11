@@ -44,10 +44,10 @@ INSERT INTO Reserva (ID_Res, Check_In, Check_Out, Num_Hospedes, Status, Valor_To
 
 -- 7. Tabela: Cliente (4 clientes)
 INSERT INTO Cliente (CPF, Telefone, Nome) VALUES 
-  ('888', '88', 'Cliente A'),
-  ('999', '99', 'Cliente B'),
-  ('000', '00', 'Cliente C'),
-  ('121', '44', 'Cliente D');
+  ('888', '88', 'João'),
+  ('999', '99', 'Marcos'),
+  ('000', '00', 'Maria'),
+  ('121', '44', 'Pedro');
 
 -- 8. Tabela: Setor (3 setores)
 INSERT INTO Setor (ID_Setor, Nome, CNPJ) VALUES 
