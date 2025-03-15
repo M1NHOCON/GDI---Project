@@ -1,22 +1,24 @@
 -- 1. Tabela: Funcionario (7 funcionários, sendo 1 gerente)
 INSERT INTO Funcionario (CPF, Telefone, Nome, Salario, Cargo, CPF_Chefe) VALUES 
-  ('1', '11', 'Carlos Silva', 3500.00, 'Gerente', NULL),
-  ('2', '22', 'Ana Souza', 2800.00, 'Supervisor', '1'),
-  ('3', '33', 'João Pereira', 2200.00, 'Assistente', '2'),
-  ('4', '44', 'Maria Oliveira', 3200.00, 'Supervisor', '1'),
-  ('5', '55', 'Lucas Santos', 2500.00, 'Atendente', '2'),
-  ('6', '66', 'Fernanda Costa', 2900.00, 'Supervisor', '1'),
-  ('7', '77', 'Rafael Lima', 2400.00, 'Assistente', '2');
+  ('1', '11', 'Carlos Silva', 4000.00, 'Gerente', NULL),
+  ('2', '11', 'Vinicius Feliz', 3000.00, 'Gerente', NULL),
+  ('3', '22', 'Ana Souza', 1400.00, 'Recepcionista', '4'),
+  ('4', '44', 'Maria Oliveira', 2000.00, 'Supervisor', '1'),
+  ('5', '66', 'Fernanda Costa', 1400.00, 'Camareira', '4'),
+  ('6', '33', 'João Pereira', 1800.00, 'Recepcionista', '7'),
+  ('7', '55', 'Lucas Santos', 2500.00, 'Supervisor', '2'),
+  ('8', '77', 'Joana Correa', 1800.00, 'Camareira', '7');
 
 -- 2. Tabela: Hotel (2 hotéis)
 INSERT INTO Hotel (CNPJ, Nome, Endereco, CPF_Gerente) VALUES 
-  ('1', 'Hotel Luxo', 'Rua A, 123', '1'),
-  ('2', 'Hotel Praia', 'Rua B, 456', '2');
+  ('1', 'Hotel CHIC', 'Glória do Goitá-PE', '2'),
+  ('2', 'Hotel Praia', 'Boa Viagem, Recife-PE', '1');
 
 -- 3. Tabela: Fones (telefones dos hotéis)
 INSERT INTO Fones (CNPJ, Fone) VALUES 
   ('1', '11'),
-  ('2', '22');
+  ('2', '22')
+  ('1', '33');
 
 -- 4. Tabela: Quarto (3 quartos em cada hotel – um de cada tipo)
 INSERT INTO Quarto (ID_Quarto, CNPJ, Tipo, Capacidade, Valor) VALUES 
@@ -29,35 +31,39 @@ INSERT INTO Quarto (ID_Quarto, CNPJ, Tipo, Capacidade, Valor) VALUES
 
 -- 5. Tabela: Comodidade 
 INSERT INTO Comodidade (ID_Com, Descricao, Custo_Ad) VALUES 
-  (1, 'Ar Condicionado', 20.00),
-  (2, 'TV', 15.00),
-  (3, 'WiFi', 10.00),
-  (4, 'Piscina', 30.00),
+  (1, 'Jacuzzi', 150.00),
+  (2, 'Decoração Romântica', 100,00),
+  (3, 'Minibar Liberado',80.00),
+  (4, 'SPA', 50.00),
   (5, 'Academia', 25.00),
-  (6, 'Estacionamento', 10.00);
+  (6, 'Estacionamento', 20.00);
 
 -- 6. Tabela: Reserva (2 reservas)
 INSERT INTO Reserva (ID_Res, Check_In, Check_Out, Num_Hospedes, Status, Valor_Total) VALUES 
   (1, TO_DATE('2025-03-10','YYYY-MM-DD'), TO_DATE('2025-03-15','YYYY-MM-DD'), 2, 'Confirmada', 300.00),
-  (2, TO_DATE('2025-03-12','YYYY-MM-DD'), TO_DATE('2025-03-14','YYYY-MM-DD'), 1, 'Cancelada', 200.00);
+  (2, TO_DATE('2025-03-12','YYYY-MM-DD'), TO_DATE('2025-03-14','YYYY-MM-DD'), 1, 'Cancelada', 270.00);
 
 -- 7. Tabela: Cliente (4 clientes)
 INSERT INTO Cliente (CPF, Telefone, Nome) VALUES 
-  ('8', '88', 'João'),
-  ('9', '99', 'Marcos'),
-  ('0', '00', 'Maria'),
-  ('12', '44', 'Pedro');
+  ('10', '21', 'João'),
+  ('11', '22', 'Marcos'),
+  ('12', '23', 'Maria'),
+  ('13', '24', 'Pedro');
 
 -- 8. Tabela: Setor (3 setores)
 INSERT INTO Setor (ID_Setor, Nome, CNPJ) VALUES 
-  (1, 'Recepção', '1'),
-  (2, 'Limpeza', '1'),
-  (3, 'Administração', '2');
+  (01, 'Recepção', '1'),
+  (02, 'Recepção', '2'),
+  (03, 'Limpeza', '1'),
+  (04, 'Limpeza', '2'),
+  (05, 'Administração', '1');
+  (06, 'Administração', '2');
 
 -- 9. Tabela: Faz_Reserva
 INSERT INTO Faz_Reserva (ID_Res, ID_Quarto, CNPJ, CPF_Cli) VALUES 
   (1, 1, '1', '8'),
-  (2, 1, '2', '9');
+  (2, 1, '2', '9'),
+  (2, 2, '2', '9');
 
 -- 10. Tabela: Pagamento
 INSERT INTO Pagamento (ID_Pag, Data, Valor, Forma_Pag, ID_Res, ID_Quarto, CNPJ) VALUES 
@@ -67,11 +73,11 @@ INSERT INTO Pagamento (ID_Pag, Data, Valor, Forma_Pag, ID_Res, ID_Quarto, CNPJ) 
 
 -- 11. Tabela: Quarto_Tem_Comodidade
 INSERT INTO Quarto_Tem_Comodidade (ID_Comodidade, ID_Quarto, CNPJ) VALUES 
-  (1, 1, '1'),
-  (2, 2, '1'),
+  (1, 3, '1'),
+  (2, 3, '1'),
   (3, 3, '1'),
-  (1, 1, '2'),
-  (2, 2, '2'),
+  (1, 3, '2'),
+  (2, 3, '2'),
   (3, 3, '2');
 
 -- 12. Tabela: Hotel_Tem_Comodidade
@@ -82,10 +88,9 @@ INSERT INTO Hotel_Tem_Comodidade (ID_Comodidade, CNPJ) VALUES
 
 -- 13. Tabela: Trabalha
 INSERT INTO Trabalha (CPF_Func, Data_Admissao, ID_Setor) VALUES 
-  ('1', TO_DATE('2020-01-10','YYYY-MM-DD'), 1),
-  ('2', TO_DATE('2021-06-15','YYYY-MM-DD'), 2),
-  ('3', TO_DATE('2019-04-10','YYYY-MM-DD'), 3),
-  ('4', TO_DATE('2022-03-20','YYYY-MM-DD'), 1),
-  ('5', TO_DATE('2023-07-30','YYYY-MM-DD'), 2),
-  ('6', TO_DATE('2022-05-01','YYYY-MM-DD'), 3),
-  ('7', TO_DATE('2023-08-01','YYYY-MM-DD'), 1);
+  ('4', TO_DATE('2020-01-10','YYYY-MM-DD'), 05),
+  ('7', TO_DATE('2021-06-15','YYYY-MM-DD'), 06),
+  ('3', TO_DATE('2019-04-10','YYYY-MM-DD'), 01),
+  ('6', TO_DATE('2022-03-20','YYYY-MM-DD'), 02),
+  ('5', TO_DATE('2023-07-30','YYYY-MM-DD'), 03),
+  ('8', TO_DATE('2022-05-01','YYYY-MM-DD'), 04),
