@@ -2,11 +2,11 @@
 INSERT INTO Funcionario (CPF, Telefone, Nome, Salario, Cargo, CPF_Chefe) VALUES 
   ('1', '11', 'Carlos Silva', 4000.00, 'Gerente', NULL),
   ('2', '11', 'Vinicius Feliz', 3000.00, 'Gerente', NULL),
-  ('3', '22', 'Ana Souza', 1400.00, 'Recepcionista', '4'),
   ('4', '44', 'Maria Oliveira', 2000.00, 'Supervisor', '1'),
+  ('3', '22', 'Ana Souza', 1400.00, 'Recepcionista', '4'),
   ('5', '66', 'Fernanda Costa', 1400.00, 'Camareira', '4'),
-  ('6', '33', 'João Pereira', 1800.00, 'Recepcionista', '7'),
   ('7', '55', 'Lucas Santos', 2500.00, 'Supervisor', '2'),
+  ('6', '33', 'João Pereira', 1800.00, 'Recepcionista', '7'),
   ('8', '77', 'Joana Correa', 1800.00, 'Camareira', '7');
 
 -- 2. Tabela: Hotel (2 hotéis)
