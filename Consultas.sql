@@ -20,5 +20,12 @@ where F.salario >(
     from FUNCIONARIO
 )
 
+--Consulta 3 -- mostra todos os quartos e suas comodidades(quando existem)
+SELECT Distinct Q.ID_Quarto,Q.CNPJ, Q.Tipo, Q.VALOR, QC.ID_QUARTO AS Comodidade
+FROM Quarto Q
+LEFT JOIN Quarto_Tem_Comodidade QC 
+ON Q.ID_Quarto = QC.ID_Quarto
+ORDER BY Q.ID_Quarto;
+
 --confusaosinha em faz_reserva, id_res pode se repetir desde que seja com outro id_quarto ou cnpj.
 --porem id_res em reserva não pode se repetir, então vai estar se referindo sempre aos mesmos valores de atributos
