@@ -27,5 +27,14 @@ LEFT JOIN Quarto_Tem_Comodidade QC
 ON Q.ID_Quarto = QC.ID_Quarto
 ORDER BY Q.ID_Quarto;
 
+--Consulta 4 -- Mostra apenas os ids de reserva que tem algum pagamento
+Select R.ID_RES
+from RESERVA R
+Where exists(
+    select *
+    from pagamento P
+    where P.ID_PAG = R.ID_RES
+)
+
 --confusaosinha em faz_reserva, id_res pode se repetir desde que seja com outro id_quarto ou cnpj.
 --porem id_res em reserva não pode se repetir, então vai estar se referindo sempre aos mesmos valores de atributos
