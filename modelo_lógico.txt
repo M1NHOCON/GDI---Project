@@ -1,0 +1,30 @@
+Funcionário (CPF,  telefone, nome, salário, cargo, cpf_chefe)#@
+  -Cpf_chefe 🡪 Funcionário (CPF)
+Hotel(CNPJ, Nome, endereço, [CPF_gerente]!)#@
+  -CPF_gerente → Funcionário(CPF)
+Fones (CNPJ, fones) #@
+  -CNPJ 🡪 Hotel (CNPJ)
+Quarto (ID_quarto, CNPJ, tipo, capacidade,valor)#@
+  - CNPJ 🡪 Hotel (CNPJ)
+Comodidade (ID_com, descrição)#@
+Reserva (ID_Res, check_In, check_Out, Num_hospedes, status, valor_total)#@
+Cliente (CPF, Telefone, Nome)#@
+Setor (ID_setor, nome, cnpj!)#@
+  -cnpj → hotel (CNPJ)
+Faz_reserva (ID_res, ID_quarto, CNPJ, CPF_cli!)#@
+  -ID_res 🡪 Reserva (ID_Res)
+  - ID_quarto, CNPJ → Quarto(ID_quarto, CNPJ)
+  -CPF_cli 🡪 Cliente (CPF)
+Pagamento (ID_pag, data, valor, forma_pag, ID_res, ID_quarto, CNPJ)#@
+  - ID_res, ID_quarto, CNPJ🡪 Faz_reserva (ID_res, ID_quarto, CNPJ)
+quarto_tem_comodidade(ID_comodidade, ID_quarto, CNPJ)
+  - ID_comodidade -> Comodidade (ID_com)
+  - ID_quarto, CNPJ -> Quarto(ID_quarto, CNPJ)
+Hotel_Tem_comodidade(ID_comodidade, CNPJ)
+  - ID_comodidade -> Comodidade (ID_com)
+  - CNPJ -> Quarto(CNPJ)
+Trabalha(CPF_func, data_admissao, ID_setor!)#
+  - CPF_func -> Funcionario(CPF)
+  - ID_setor → Setor(ID_ setor)
+
+
