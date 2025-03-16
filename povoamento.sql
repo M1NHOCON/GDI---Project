@@ -30,13 +30,13 @@ INSERT INTO Quarto (ID_Quarto, CNPJ, Tipo, Capacidade, Valor) VALUES
   (3, '2', 'Suite', 4, 210.00);
 
 -- 5. Tabela: Comodidade 
-INSERT INTO Comodidade (ID_Com, Descricao, Custo_Ad) VALUES 
-  (1, 'Jacuzzi', 150.00),
-  (2, 'Decoração Romântica', 100,00),
-  (3, 'Minibar Liberado',80.00),
-  (4, 'SPA', 50.00),
-  (5, 'Academia', 25.00),
-  (6, 'Estacionamento', 20.00);
+INSERT INTO Comodidade (ID_Com, Descricao) VALUES 
+  (1, 'Jacuzzi'),
+  (2, 'Decoração Romântica'),
+  (3, 'Minibar Liberado'),
+  (4, 'SPA'),
+  (5, 'Academia'),
+  (6, 'Estacionamento');
 
 -- 6. Tabela: Reserva (2 reservas)
 INSERT INTO Reserva (ID_Res, Check_In, Check_Out, Num_Hospedes, Status, Valor_Total) VALUES 
