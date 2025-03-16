@@ -11,7 +11,7 @@ from Funcionario F INNER JOIN TRABALHA T on F.CPF = T.CPF_FUNC
                     INNER JOIN SETOR S on T.ID_SETOR = S.ID_SETOR
 
 -- Consulta 3 -- Rtorna funcionarios com salario acima da media
-SELECT F.nome, F.salario, (select AVG(D.SALARIO) from FUNCIONARIO d)
+SELECT F.nome, F.salario, (select round(AVG(D.SALARIO),2) from FUNCIONARIO d)
 from FUNCIONARIO F
 where F.salario >(
     select avg(salario)
