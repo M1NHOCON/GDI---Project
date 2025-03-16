@@ -64,5 +64,11 @@ Where not exists(
    where P.ID_RES = R.ID_RES
 )
 
+--Consulta 6 -- (consulta que retorna apenas um valor) - Funcionário com o maior salário
+SELECT Nome
+FROM Funcionario
+WHERE Salario = (SELECT MAX(Salario) FROM Funcionario);
+
+
 --confusaosinha em faz_reserva, id_res pode se repetir desde que seja com outro id_quarto ou cnpj.
 --porem id_res em reserva não pode se repetir, então vai estar se referindo sempre aos mesmos valores de atributos
