@@ -1,3 +1,20 @@
+/*Seu projeto deve ter todos os tipos de consultas abaixo
+1-Group by/Having
+2-Junção interna
+3-Junção externa
+4-Semi junção
+5-Anti-junção
+6-Subconsulta do tipo escalar
+7-Subconsulta do tipo linha
+8-Subconsulta do tipo tabela
+9-Operação de conjunto
+
+Atenção: Cada aluno deve fazer ao menos 01 dessas consultas mais 01 procedimento com SQL embutida e parâmetro, função com SQL embutida e parâmetro ou gatilho. 
+*/
+
+
+
+
 -- Consulta 1 -- Mostra todos os setores que tem uma quantidade > x
 select s.NOME, S.CNPJ, count(*) as QTD
 from SETOR S, TRABALHA T
@@ -34,6 +51,17 @@ Where exists(
     select *
     from pagamento P
     where P.ID_PAG = R.ID_RES
+    AND Q.CNPJ = FZ.CNPJ
+
+)
+
+--Consulta 5 -- Mostra as reservas que nao tem nenhum pagamento
+Select R.ID_RES
+from RESERVA R
+Where not exists(
+    select *
+    from pagamento P
+   where P.ID_RES = R.ID_RES
 )
 
 --confusaosinha em faz_reserva, id_res pode se repetir desde que seja com outro id_quarto ou cnpj.
