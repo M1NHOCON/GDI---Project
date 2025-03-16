@@ -12,9 +12,13 @@ from Funcionario F INNER JOIN TRABALHA T on F.CPF = T.CPF_FUNC
 
 -- Consulta 3 -- Rtorna funcionarios com salario acima da media
 -- Achei meio sem sentido, pq calcula a média dos funcionários de todos os hotéis...
+--acho que isso não seja junção externa
 SELECT F.nome, F.salario, (select round(AVG(D.SALARIO),2) from FUNCIONARIO d)
 from FUNCIONARIO F
 where F.salario >(
     select avg(salario)
     from FUNCIONARIO
 )
+
+--confusaosinha em faz_reserva, id_res pode se repetir desde que seja com outro id_quarto ou cnpj.
+--porem id_res em reserva não pode se repetir, então vai estar se referindo sempre aos mesmos valores de atributos
