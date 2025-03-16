@@ -48,8 +48,7 @@ CREATE TABLE Quarto (
 
 CREATE TABLE Comodidade (
     ID_Com NUMBER(10) PRIMARY KEY,
-    Descricao VARCHAR2(100),
-    Custo_Ad NUMBER(6,2)
+    Descricao VARCHAR2(100)
 );
 
 CREATE TABLE Reserva (
