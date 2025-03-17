@@ -38,6 +38,22 @@ where F.salario >(
     from FUNCIONARIO
 )
 
+--Consulta 1 - Paulo -- mostra o os nomes e quantidade de reservas dos clientes que fizeram mais de uma reserva
+SELECT C.Nome AS Nome_Cliente,COUNT(r.ID_Res) AS Total_Reservas
+FROM Cliente C
+JOIN Faz_Reserva fr ON c.CPF = fr.CPF_Cli
+JOIN Reserva r ON fr.ID_Res = r.ID_Res
+GROUP BY C.Nome
+HAVING COUNT(r.ID_Res) > 1
+
+--Consulta 2 - Paulo - mostra os hoteis e seus respectivos gerentes
+SELECT 
+    H.Nome AS Nome_Hotel,
+    (F.Nome) AS Nome_Gerente,
+    (F.Cargo)
+FROM Hotel H
+INNER JOIN Funcionario F ON H.CPF_Gerente = F.CPF;
+
 --Consulta 3 - Paulo -- mostra todos os quartos e suas comodidades(quando existem)
 SELECT Distinct Q.ID_Quarto,Q.CNPJ, Q.Tipo, Q.VALOR, QC.ID_QUARTO AS Comodidade
 FROM Quarto Q
