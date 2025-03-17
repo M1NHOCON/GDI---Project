@@ -37,14 +37,14 @@ where F.salario >(
     from FUNCIONARIO
 )
 
---Consulta 3 -- mostra todos os quartos e suas comodidades(quando existem)
+--Consulta 3 - Paulo -- mostra todos os quartos e suas comodidades(quando existem)
 SELECT Distinct Q.ID_Quarto,Q.CNPJ, Q.Tipo, Q.VALOR, QC.ID_QUARTO AS Comodidade
 FROM Quarto Q
 LEFT JOIN Quarto_Tem_Comodidade QC 
 ON Q.ID_Quarto = QC.ID_Quarto
 ORDER BY Q.ID_Quarto;
 
---Consulta 4 -- Mostra apenas os ids de reserva que tem algum pagamento
+--Consulta 4 - Paulo -- Mostra apenas os ids de reserva que tem algum pagamento
 Select R.ID_RES
 from RESERVA R
 Where exists(
@@ -55,7 +55,7 @@ Where exists(
 
 )
 
---Consulta 5 -- Mostra as reservas que nao tem nenhum pagamento
+--Consulta 5 - Paulo -- Mostra as reservas que nao tem nenhum pagamento
 Select R.ID_RES
 from RESERVA R
 Where not exists(
@@ -64,10 +64,21 @@ Where not exists(
    where P.ID_RES = R.ID_RES
 )
 
---Consulta 6 -- (consulta que retorna apenas um valor) - Funcionário com o maior salário
+--Consulta 6 Paulo -- (consulta que retorna apenas um valor) - Funcionário com o maior salário
 SELECT Nome
 FROM Funcionario
 WHERE Salario = (SELECT MAX(Salario) FROM Funcionario);
+
+--Consulta 7 - Paulo -- (retorna 1 linha com várias colunas)- reserva com o maior valor
+SELECT * 
+FROM Reserva
+WHERE ID_Res = (
+    SELECT ID_Res 
+    FROM Reserva 
+    WHERE Valor_Total = (SELECT MAX(Valor_Total) 
+                         FROM Reserva)
+);
+
 
 
 --confusaosinha em faz_reserva, id_res pode se repetir desde que seja com outro id_quarto ou cnpj.
