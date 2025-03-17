@@ -266,6 +266,11 @@ WHERE CPF IN (
   WHERE ID_Setor IN (1, 2, 3)
 );
 
+-- Consulta 9 -- vinicius -- MINUS: Quartos que nunca foram reservados
+SELECT ID_Quarto FROM Quarto
+MINUS
+SELECT ID_Quarto FROM Faz_Reserva;
+
 
 --confusaosinha em faz_reserva, id_res pode se repetir desde que seja com outro id_quarto ou cnpj.
 --porem id_res em reserva não pode se repetir, então vai estar se referindo sempre aos mesmos valores de atributos
