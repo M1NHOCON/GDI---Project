@@ -7,11 +7,11 @@ Fones (CNPJ, fones) #@
 Quarto (ID_quarto, CNPJ, tipo, capacidade,valor)#@
   - CNPJ 🡪 Hotel (CNPJ)
 Comodidade (ID_com, descrição)#@
-Reserva (ID_Res, check_In, check_Out, Num_hospedes, status, valor_total)#@
+Reserva (ID_Res, Num_hospedes, status, valor_total)#@
 Cliente (CPF, Telefone, Nome)#@
 Setor (ID_setor, nome, cnpj!)#@
   -cnpj → hotel (CNPJ)
-Faz_reserva (ID_res, ID_quarto, CNPJ, CPF_cli!)#@
+Faz_reserva (ID_res, ID_quarto, CNPJ, CPF_cli!, check_In, check_Out)#@
   -ID_res 🡪 Reserva (ID_Res)
   - ID_quarto, CNPJ → Quarto(ID_quarto, CNPJ)
   -CPF_cli 🡪 Cliente (CPF)
@@ -26,5 +26,3 @@ Hotel_Tem_comodidade(ID_comodidade, CNPJ)
 Trabalha(CPF_func, data_admissao, ID_setor!)#
   - CPF_func -> Funcionario(CPF)
   - ID_setor → Setor(ID_ setor)
-
-
