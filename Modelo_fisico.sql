@@ -53,8 +53,6 @@ CREATE TABLE Comodidade (
 
 CREATE TABLE Reserva (
     ID_Res NUMBER PRIMARY KEY,
-    Check_In DATE,
-    Check_Out DATE,
     Num_Hospedes NUMBER,
     Status VARCHAR2(20),
     Valor_Total NUMBER(10,2)
@@ -65,6 +63,8 @@ CREATE TABLE Faz_Reserva (
     ID_Quarto NUMBER,
     CNPJ VARCHAR2(14),
     CPF_Cli VARCHAR2(11) NOT NULL,
+    Check_In DATE,
+    Check_Out DATE,
     PRIMARY KEY (ID_Res, ID_Quarto, CNPJ),
     CONSTRAINT FK_FazReserva_Reserva FOREIGN KEY (ID_Res) REFERENCES Reserva(ID_Res),
     CONSTRAINT FK_FazReserva_Quarto FOREIGN KEY (ID_Quarto, CNPJ) REFERENCES Quarto(ID_Quarto, CNPJ),
