@@ -37,9 +37,9 @@ INSERT INTO Comodidade (ID_Com, Descricao) VALUES
   (6, 'Estacionamento');
 
 -- 6. Tabela: Reserva (2 reservas)
-INSERT INTO Reserva (ID_Res, Check_In, Check_Out, Num_Hospedes, Status, Valor_Total) VALUES 
-  (1, TO_DATE('2025-03-10','YYYY-MM-DD'), TO_DATE('2025-03-15','YYYY-MM-DD'), 2, 'Confirmada', 300.00),
-  (2, TO_DATE('2025-03-12','YYYY-MM-DD'), TO_DATE('2025-03-14','YYYY-MM-DD'), 1, 'Cancelada', 270.00);
+INSERT INTO Reserva (ID_Res, Num_Hospedes, Status, Valor_Total) VALUES 
+  (1, 2, 'Confirmada', 300.00),
+  (2, 3, 'Cancelada', 270.00);
 
 -- 7. Tabela: Cliente (4 clientes)
 INSERT INTO Cliente (CPF, Telefone, Nome) VALUES 
@@ -58,10 +58,10 @@ INSERT INTO Setor (ID_Setor, Nome, CNPJ) VALUES
   (666, 'Administração', '2');
 
 -- 9. Tabela: Faz_Reserva
-INSERT INTO Faz_Reserva (ID_Res, ID_Quarto, CNPJ, CPF_Cli) VALUES 
-  (1, 1, '1', '10'),
-  (2, 1, '2', '11'),
-  (2, 2, '2', '11');
+INSERT INTO Faz_Reserva (ID_Res, ID_Quarto, CNPJ, CPF_Cli, Check_In, Check_Out) VALUES 
+  (1, 1, '1', '10', TO_DATE('2025-03-10','YYYY-MM-DD'), TO_DATE('2025-03-15','YYYY-MM-DD')),
+  (2, 1, '2', '11', TO_DATE('2025-03-12','YYYY-MM-DD'), TO_DATE('2025-03-14','YYYY-MM-DD')),
+  (2, 2, '2', '11', TO_DATE('2025-03-12','YYYY-MM-DD'), TO_DATE('2025-03-14','YYYY-MM-DD'));
 
 -- 10. Tabela: Pagamento
 INSERT INTO Pagamento (ID_Pag, Data, Valor, Forma_Pag, ID_Res, ID_Quarto, CNPJ) VALUES 
