@@ -79,13 +79,11 @@ WHERE ID_Res = (
                          FROM Reserva)
 );
 
-
--- Consulta 1 - Vinicius -- Quantidade de quartos por tipo em um hotel específico
-SELECT Tipo, COUNT(*) AS Total_Quartos
-FROM Quarto
-WHERE CNPJ = '12345678901234'
-GROUP BY Tipo;
-
-
+-- Consulta 1 -- Vinicius -- Total de reservas por cliente com valor total superior a 1000
+SELECT CPF_Cli, SUM(r.Valor_Total) AS Total_Gasto
+FROM Faz_Reserva fr
+JOIN Reserva r ON fr.ID_Res = r.ID_Res
+GROUP BY CPF_Cli
+HAVING SUM(r.Valor_Total) > 1000;
 --confusaosinha em faz_reserva, id_res pode se repetir desde que seja com outro id_quarto ou cnpj.
 --porem id_res em reserva não pode se repetir, então vai estar se referindo sempre aos mesmos valores de atributos
