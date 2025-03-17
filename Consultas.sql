@@ -216,5 +216,20 @@ FROM Faz_Reserva fr
 JOIN Reserva r ON fr.ID_Res = r.ID_Res
 GROUP BY CPF_Cli
 HAVING SUM(r.Valor_Total) > 1000;
+
+-- Consulta 2 -- Vinicius -- Pagamentos com detalhes de reserva
+SELECT p.ID_Pag, p.Valor, r.Status
+FROM Pagamento p INNER JOIN 
+      Reserva r ON p.ID_Res = r.ID_Res;
+
+-- Consulta 3 -- vinicius -- Setores e funcionários alocados (incluindo setores sem funcionários)
+SELECT s.Nome, f.Nome
+FROM Setor s
+LEFT JOIN Trabalha t ON s.ID_Setor = t.ID_Setor
+LEFT JOIN Funcionario f ON t.CPF_Func = f.CPF;
+
+-- Consulta 4 -- vinicius --
+
 --confusaosinha em faz_reserva, id_res pode se repetir desde que seja com outro id_quarto ou cnpj.
 --porem id_res em reserva não pode se repetir, então vai estar se referindo sempre aos mesmos valores de atributos
+
