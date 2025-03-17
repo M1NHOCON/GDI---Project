@@ -11,7 +11,8 @@
 
 Atenção: Cada aluno deve fazer ao menos 01 dessas consultas mais 01 procedimento com SQL embutida e parâmetro, função com SQL embutida e parâmetro ou gatilho. 
 */
-
+--ATENÇÃO - É IMPORTANTE QUE OS GATILHOS RESOLVAM PROBLEMAS REAIS DO NOSSO ESQUEMA(vejam meu exemplo(Paulo))
+--SUGESTÃO - Trocar datas de check-in-out para quarto, pois em reserva, reservamos quartos mesmos nos dias que não estaremos neles caso sejam de hoteis diferentes
 
 
 
@@ -92,6 +93,106 @@ HAVING COUNT(T.CPF_Func) = (
         GROUP BY ID_Setor
     )
 );
+
+--Consulta 9 - Paulo - Retorna os cpf's e nomes de todas as pessoas, clientes + func
+SELECT CPF, Nome, 'Funcionário' AS Tipo
+FROM Funcionario
+UNION
+SELECT CPF, Nome, 'Cliente' AS Tipo
+FROM Cliente;
+
+--Procedimento - Paulo - Insere um novo Funcionário
+CREATE OR REPLACE PROCEDURE InserirFuncionario(
+    p_CPF IN VARCHAR2,
+    p_Telefone IN VARCHAR2,
+    p_Nome IN VARCHAR2,
+    p_Salario IN NUMBER,
+    p_Cargo IN VARCHAR2,
+    p_CPF_Chefe IN VARCHAR2 DEFAULT NULL
+) AS
+BEGIN
+    INSERT INTO Funcionario (CPF, Telefone, Nome, Salario, Cargo, CPF_Chefe)
+    VALUES (p_CPF, p_Telefone, p_Nome, p_Salario, p_Cargo, p_CPF_Chefe);
+    COMMIT;
+END;
+----------------exemplo de como usa-----------------
+BEGIN
+    InserirFuncionario('12345678901', '11999999999', 'Carlos Silva', 3000, 'Recepcionista', NULL);
+END;
+---------------------------------
+
+--Função - Paulo - retorna o salário de um funcionário
+CREATE OR REPLACE FUNCTION ObterSalario(
+    p_CPF IN VARCHAR2
+) RETURN NUMBER AS
+    v_Salario NUMBER;
+BEGIN
+    SELECT Salario INTO v_Salario
+    FROM Funcionario
+    WHERE CPF = p_CPF;
+
+    RETURN v_Salario;
+END;
+---------------exemplo de uso---------------
+SELECT ObterSalario('1') FROM DUAL;
+--------------------------------------------
+
+--Gatilho - Paulo - Impede que o funcionário tenha um chefe que trabalha em outro hotel
+CREATE OR REPLACE TRIGGER ChefeMesmoHotel
+BEFORE INSERT OR UPDATE OF CPF_Chefe ON Funcionario
+FOR EACH ROW
+WHEN (NEW.CPF_Chefe IS NOT NULL)  -- Só verifica se houver um chefe informado
+DECLARE
+    v_Chefe_Hotel NUMBER;
+    v_Func_Hotel NUMBER;
+BEGIN
+    -- Obtém o hotel do chefe
+    SELECT ID_Setor INTO v_Chefe_Hotel
+    FROM Trabalha
+    WHERE CPF_Func = :NEW.CPF_Chefe
+    AND ROWNUM = 1; -- Garante apenas um resultado
+
+    -- Obtém o hotel do funcionário
+    SELECT ID_Setor INTO v_Func_Hotel
+    FROM Trabalha
+    WHERE CPF_Func = :NEW.CPF
+    AND ROWNUM = 1;
+
+    -- Se forem diferentes, impede a operação
+    IF v_Chefe_Hotel != v_Func_Hotel THEN
+        RAISE_APPLICATION_ERROR(-20001, 'O chefe deve trabalhar no mesmo hotel que o funcionário.');
+    END IF;
+END;
+
+
+  
+-- Procedimento - Muda o chefe de um funcionário
+CREATE OR REPLACE PROCEDURE AlterarChefeFuncionario(
+    p_CPF IN VARCHAR2,       -- CPF do funcionário cujo chefe será alterado
+    p_CPF_Chefe IN VARCHAR2  -- Novo chefe
+) AS
+    v_Existe NUMBER;
+BEGIN
+    -- Verifica se o funcionário existe
+    SELECT COUNT(*) INTO v_Existe
+    FROM Funcionario
+    WHERE CPF = p_CPF;
+
+    -- Se existe, atualiza o chefe
+    IF v_Existe > 0 THEN
+        UPDATE Funcionario
+        SET CPF_Chefe = p_CPF_Chefe
+        WHERE CPF = p_CPF;
+        
+        COMMIT;
+    END IF;
+END;
+/
+-----------------exemplo de como usa-----------------
+  BEGIN
+    AlterarChefeFuncionario('12345678901', '56789012345');
+END;
+----------------------------------
 
 -- Consulta 1 -- Vinicius -- Total de reservas por cliente com valor total superior a 1000
 SELECT CPF_Cli, SUM(r.Valor_Total) AS Total_Gasto
