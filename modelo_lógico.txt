@@ -1,3 +1,5 @@
+https://docs.google.com/document/d/1kKKO3fGLvf7sbRoMsXoR8aBHaGswUxtocMBJuIt_dT4/edit?usp=sharing
+
 Funcionário (CPF,  telefone, nome, salário, cargo, cpf_chefe)#@
   -Cpf_chefe 🡪 Funcionário (CPF)
 Hotel(CNPJ, Nome, endereço, [CPF_gerente]!)#@
