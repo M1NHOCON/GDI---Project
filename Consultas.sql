@@ -79,6 +79,20 @@ WHERE ID_Res = (
                          FROM Reserva)
 );
 
+--Consulta 8 - Paulo - (retorna varias colunas e linhas) retorna os setores com mais funcionários
+SELECT S.ID_Setor, S.Nome, COUNT(T.CPF_Func) AS Num_Funcionarios
+FROM Setor S
+JOIN Trabalha T ON S.ID_Setor = T.ID_Setor
+GROUP BY S.ID_Setor, S.Nome
+HAVING COUNT(T.CPF_Func) = (
+    SELECT MAX(Num_Func)
+    FROM (
+        SELECT COUNT(CPF_Func) AS Num_Func
+        FROM Trabalha
+        GROUP BY ID_Setor
+    )
+);
+
 -- Consulta 1 -- Vinicius -- Total de reservas por cliente com valor total superior a 1000
 SELECT CPF_Cli, SUM(r.Valor_Total) AS Total_Gasto
 FROM Faz_Reserva fr
