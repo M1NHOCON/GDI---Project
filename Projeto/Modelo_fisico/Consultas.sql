@@ -14,30 +14,6 @@ Atenção: Cada aluno deve fazer ao menos 01 dessas consultas mais 01 procedimen
 --ATENÇÃO - É IMPORTANTE QUE OS GATILHOS RESOLVAM PROBLEMAS REAIS DO NOSSO ESQUEMA(vejam meu exemplo(Paulo))
 --SUGESTÃO - Trocar datas de check-in-out para quarto, pois em reserva, reservamos quartos mesmos nos dias que não estaremos neles caso sejam de hoteis diferentes
 
-
-
--- Consulta 1 -- Mostra todos os setores que tem uma quantidade > x
-select s.NOME, S.CNPJ, count(*) as QTD
-from SETOR S, TRABALHA T
-where S.ID_SETOR = T.ID_SETOR
-group by S.NOME, S.CNPJ
-having QTD>1
-
--- Consulta 2 -- Retorna todo os trabalhadores que trabalham em um setor no hotel
-select F.NOME as FNOME, T.ID_SETOR, S.NOME as NOME_Setor, S.CNPJ
-from Funcionario F INNER JOIN TRABALHA T on F.CPF = T.CPF_FUNC
-                    INNER JOIN SETOR S on T.ID_SETOR = S.ID_SETOR
-
--- Consulta 3 -- Rtorna funcionarios com salario acima da media
--- Achei meio sem sentido, pq calcula a média dos funcionários de todos os hotéis...
---acho que isso não seja junção externa
-SELECT F.nome, F.salario, (select round(AVG(D.SALARIO),2) from FUNCIONARIO d)
-from FUNCIONARIO F
-where F.salario >(
-    select avg(salario)
-    from FUNCIONARIO
-)
-
 --Consulta 1 - Paulo -- mostra o os nomes e quantidade de reservas dos clientes que fizeram mais de uma reserva
 SELECT C.Nome AS Nome_Cliente,COUNT(r.ID_Res) AS Total_Reservas
 FROM Cliente C
