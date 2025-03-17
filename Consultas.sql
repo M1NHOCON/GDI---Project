@@ -80,6 +80,12 @@ WHERE ID_Res = (
 );
 
 
+-- Consulta 1 - Vinicius -- Quantidade de quartos por tipo em um hotel específico
+SELECT Tipo, COUNT(*) AS Total_Quartos
+FROM Quarto
+WHERE CNPJ = '12345678901234'
+GROUP BY Tipo;
+
 
 --confusaosinha em faz_reserva, id_res pode se repetir desde que seja com outro id_quarto ou cnpj.
 --porem id_res em reserva não pode se repetir, então vai estar se referindo sempre aos mesmos valores de atributos
