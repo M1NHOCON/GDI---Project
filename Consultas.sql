@@ -224,11 +224,48 @@ FROM Pagamento p INNER JOIN
 
 -- Consulta 3 -- vinicius -- Setores e funcionários alocados (incluindo setores sem funcionários)
 SELECT s.Nome, f.Nome
-FROM Setor s
-LEFT JOIN Trabalha t ON s.ID_Setor = t.ID_Setor
-LEFT JOIN Funcionario f ON t.CPF_Func = f.CPF;
+FROM Setor s LEFT JOIN
+      Trabalha t ON s.ID_Setor = t.ID_Setor LEFT JOIN
+      Funcionario f ON t.CPF_Func = f.CPF;
 
--- Consulta 4 -- vinicius --
+-- Consulta 4 -- vinicius -- Clientes que já fizeram reservas
+SELECT DISTINCT c.*
+FROM Cliente c
+WHERE EXISTS (
+    SELECT fr.ID_RES
+    FROM Faz_Reserva fr 
+    WHERE fr.CPF_Cli = c.CPF
+);
+
+-- Consulta 5 -- vinicius -- Clientes que nunca fizeram reservas
+SELECT *
+FROM Cliente c
+WHERE NOT EXISTS (
+    SELECT fr.ID_RES 
+    FROM Faz_Reserva fr 
+    WHERE fr.CPF_Cli = c.CPF
+);
+-- Consulta 6 -- vinicius -- Retorna o Faturamento total de Reservas
+SELECT (SELECT SUM(Valor_Total) FROM Reserva) AS Total_Reservas 
+FROM DUAL;
+
+-- Consulta 7 -- vinicius --Detalhes do funcionário com maior salário
+SELECT *
+FROM Funcionario f
+WHERE f.SALARIO = (
+  SELECT MAX(f2.SALARIO)
+  FROM Funcionario f2
+);
+
+-- Consulta 8 -- vinicius --Listar funcionários que trabalham em setores específicos, nesse caso, 1, 2 e 3
+SELECT *
+FROM Funcionario
+WHERE CPF IN (
+  SELECT CPF_Func 
+  FROM Trabalha 
+  WHERE ID_Setor IN (1, 2, 3)
+);
+
 
 --confusaosinha em faz_reserva, id_res pode se repetir desde que seja com outro id_quarto ou cnpj.
 --porem id_res em reserva não pode se repetir, então vai estar se referindo sempre aos mesmos valores de atributos
