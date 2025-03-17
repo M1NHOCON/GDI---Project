@@ -14,7 +14,7 @@ Atenção: Cada aluno deve fazer ao menos 01 dessas consultas mais 01 procedimen
 --ATENÇÃO - É IMPORTANTE QUE OS GATILHOS RESOLVAM PROBLEMAS REAIS DO NOSSO ESQUEMA(vejam meu exemplo(Paulo))
 --SUGESTÃO - Trocar datas de check-in-out para quarto, pois em reserva, reservamos quartos mesmos nos dias que não estaremos neles caso sejam de hoteis diferentes
 
---Consulta 1 - Paulo -- mostra o os nomes e quantidade de reservas dos clientes que fizeram mais de uma reserva
+-- Group by/Having - Paulo -- mostra o os nomes e quantidade de reservas dos clientes que fizeram mais de uma reserva
 SELECT C.Nome AS Nome_Cliente,COUNT(r.ID_Res) AS Total_Reservas
 FROM Cliente C
 JOIN Faz_Reserva fr ON c.CPF = fr.CPF_Cli
@@ -22,7 +22,7 @@ JOIN Reserva r ON fr.ID_Res = r.ID_Res
 GROUP BY C.Nome
 HAVING COUNT(r.ID_Res) > 1
 
---Consulta 2 - Paulo - mostra os hoteis e seus respectivos gerentes
+-- Junção interna - Paulo - mostra os hoteis e seus respectivos gerentes
 SELECT 
     H.Nome AS Nome_Hotel,
     (F.Nome) AS Nome_Gerente,
@@ -30,25 +30,23 @@ SELECT
 FROM Hotel H
 INNER JOIN Funcionario F ON H.CPF_Gerente = F.CPF;
 
---Consulta 3 - Paulo -- mostra todos os quartos e suas comodidades(quando existem)
-SELECT Distinct Q.ID_Quarto,Q.CNPJ, Q.Tipo, Q.VALOR, QC.ID_QUARTO AS Comodidade
+-- Junção externa - Paulo -- mostra todos os quartos e suas comodidades(quando existem)
+SELECT Distinct Q.ID_Quarto,Q.CNPJ, Q.Tipo, Q.VALOR, (QC.ID_COMODIDADE)
 FROM Quarto Q
 LEFT JOIN Quarto_Tem_Comodidade QC 
 ON Q.ID_Quarto = QC.ID_Quarto
 ORDER BY Q.ID_Quarto;
 
---Consulta 4 - Paulo -- Mostra apenas os ids de reserva que tem algum pagamento
-Select R.ID_RES
-from RESERVA R
-Where exists(
-    select *
-    from pagamento P
-    where P.ID_PAG = R.ID_RES
-    AND Q.CNPJ = FZ.CNPJ
+-- Semi junção - vinicius -- Clientes que já fizeram reservas
+SELECT DISTINCT c.*
+FROM Cliente c
+WHERE EXISTS (
+    SELECT fr.ID_RES
+    FROM Faz_Reserva fr 
+    WHERE fr.CPF_Cli = c.CPF
+);
 
-)
-
---Consulta 5 - Paulo -- Mostra as reservas que nao tem nenhum pagamento
+-- Anti-junção - Paulo -- Mostra as reservas que nao tem nenhum pagamento
 Select R.ID_RES
 from RESERVA R
 Where not exists(
@@ -57,12 +55,12 @@ Where not exists(
    where P.ID_RES = R.ID_RES
 )
 
---Consulta 6 Paulo -- (consulta que retorna apenas um valor) - Funcionário com o maior salário
+-- Subconsulta do tipo escalar - Paulo -- (consulta que retorna apenas um valor) - Funcionário com o maior salário
 SELECT Nome
 FROM Funcionario
 WHERE Salario = (SELECT MAX(Salario) FROM Funcionario);
 
---Consulta 7 - Paulo -- (retorna 1 linha com várias colunas)- reserva com o maior valor
+-- Subconsulta do tipo linha - Paulo -- (retorna 1 linha com várias colunas)- reserva com o maior valor
 SELECT * 
 FROM Reserva
 WHERE ID_Res = (
@@ -72,7 +70,7 @@ WHERE ID_Res = (
                          FROM Reserva)
 );
 
---Consulta 8 - Paulo - (retorna varias colunas e linhas) retorna os setores com mais funcionários
+-- Subconsulta do tipo tabela - Paulo - (retorna varias colunas e linhas) retorna os setores com mais funcionários
 SELECT S.ID_Setor, S.Nome, COUNT(T.CPF_Func) AS Num_Funcionarios
 FROM Setor S
 JOIN Trabalha T ON S.ID_Setor = T.ID_Setor
@@ -86,7 +84,7 @@ HAVING COUNT(T.CPF_Func) = (
     )
 );
 
---Consulta 9 - Paulo - Retorna os cpf's e nomes de todas as pessoas, clientes + func
+-- Operação de conjunto - Paulo - Retorna os cpf's e nomes de todas as pessoas, clientes + func
 SELECT CPF, Nome, 'Funcionário' AS Tipo
 FROM Funcionario
 UNION
@@ -156,35 +154,6 @@ BEGIN
     END IF;
 END;
 
-
-  
--- Procedimento - Muda o chefe de um funcionário
-CREATE OR REPLACE PROCEDURE AlterarChefeFuncionario(
-    p_CPF IN VARCHAR2,       -- CPF do funcionário cujo chefe será alterado
-    p_CPF_Chefe IN VARCHAR2  -- Novo chefe
-) AS
-    v_Existe NUMBER;
-BEGIN
-    -- Verifica se o funcionário existe
-    SELECT COUNT(*) INTO v_Existe
-    FROM Funcionario
-    WHERE CPF = p_CPF;
-
-    -- Se existe, atualiza o chefe
-    IF v_Existe > 0 THEN
-        UPDATE Funcionario
-        SET CPF_Chefe = p_CPF_Chefe
-        WHERE CPF = p_CPF;
-        
-        COMMIT;
-    END IF;
-END;
-/
------------------exemplo de como usa-----------------
-  BEGIN
-    AlterarChefeFuncionario('12345678901', '56789012345');
-END;
-----------------------------------
 
 -- Consulta 1 -- Vinicius -- Total de reservas por cliente com valor total superior a 1000
 SELECT CPF_Cli, SUM(r.Valor_Total) AS Total_Gasto
