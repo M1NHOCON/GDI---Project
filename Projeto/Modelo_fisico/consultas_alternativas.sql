@@ -11,3 +11,17 @@ where h.CPF_GERENTE IN (
     from FUNCIONARIO f
     where f.cpf = h.CPF_GERENTE
 )
+
+--------3--------
+SELECT DISTINCT 
+    Q.ID_Quarto, 
+    Q.CNPJ, 
+    Q.Tipo, 
+    Q.VALOR, 
+    (SELECT QC.ID_COMODIDADE 
+     FROM Quarto_Tem_Comodidade QC 
+     WHERE QC.ID_Quarto = Q.ID_Quarto 
+     LIMIT 1) AS ID_COMODIDADE
+FROM Quarto Q
+ORDER BY Q.ID_Quarto;
+
