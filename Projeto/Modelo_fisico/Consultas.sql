@@ -1,10 +1,9 @@
 -- Group by/Having -- mostra o os nomes e quantidade de reservas dos clientes que fizeram mais de uma reserva
-SELECT C.Nome AS Nome_Cliente,COUNT(r.ID_Res) AS Total_Reservas
-FROM Cliente C JOIN
-     Faz_Reserva fr ON c.CPF = fr.CPF_Cli JOIN 
-     Reserva r ON fr.ID_Res = r.ID_Res
+SELECT C.Nome AS Nome_Cliente,COUNT(fr.ID_Res) AS Total_Reservas
+FROM Cliente C
+JOIN Faz_Reserva fr ON c.CPF = fr.CPF_Cli
 GROUP BY C.Nome
-HAVING COUNT(r.ID_Res) > 1
+HAVING COUNT(fr.ID_Res) > 1
 
 -- Junção interna - mostra os hoteis e seus respectivos gerentes
 SELECT 
