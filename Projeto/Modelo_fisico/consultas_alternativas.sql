@@ -31,7 +31,8 @@ from cliente c
 Inner join FAZ_RESERVA Fr
 on fr.CPF_CLI = c.cpf 
 
----5-----SELECT R.ID_RES
+---5-----
+SELECT R.ID_RES
 FROM RESERVA R
 LEFT JOIN PAGAMENTO P ON R.ID_RES = P.ID_RES
 WHERE P.ID_RES IS NULL;
