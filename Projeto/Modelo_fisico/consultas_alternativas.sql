@@ -25,3 +25,10 @@ SELECT DISTINCT
 FROM Quarto Q
 ORDER BY Q.ID_Quarto;
 
+----4----
+select distinct c.*
+from cliente c
+Inner join FAZ_RESERVA Fr
+on fr.CPF_CLI = c.cpf 
+
+
