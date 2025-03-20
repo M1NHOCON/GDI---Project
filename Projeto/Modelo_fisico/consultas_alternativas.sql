@@ -43,5 +43,12 @@ FROM Reserva R1
 JOIN Reserva R2 ON R1.ID_Res = R2.ID_Res
 WHERE R2.Valor_Total = (SELECT MAX(Valor_Total) FROM Reserva);
 
+----8----
+select F.*
+from FUNCIONARIO f
+inner join trabalha t
+on f.CPF = t.CPF_FUNC
+where t.ID_SETOR IN (111,222)
+
 
 
