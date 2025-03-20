@@ -37,13 +37,13 @@ FROM RESERVA R
 LEFT JOIN PAGAMENTO P ON R.ID_RES = P.ID_RES
 WHERE P.ID_RES IS NULL;
 
------7-----
+-----8-----
 SELECT R1.*
 FROM Reserva R1
 JOIN Reserva R2 ON R1.ID_Res = R2.ID_Res
 WHERE R2.Valor_Total = (SELECT MAX(Valor_Total) FROM Reserva);
 
-----8----
+----9----
 select F.*
 from FUNCIONARIO f
 inner join trabalha t
