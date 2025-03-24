@@ -71,7 +71,7 @@ A versão relacional das entidades inclui o uso de chaves primárias, estrangeir
 
 ## 📂 Scripts SQL
 
-Todos os scripts de criação das tabelas, constraints e relacionamentos estão disponíveis no arquivo `script.sql`.
+Todos os scripts de criação, consultas e povoamento estão disponíveis na pasta `Projeto/Modelo_fisico`.
 
 ---
 
@@ -80,5 +80,3 @@ Todos os scripts de criação das tabelas, constraints e relacionamentos estão 
 - Projeto acadêmico executado com sucesso no Oracle Live SQL.
 - Todas as tabelas possuem suas constraints de integridade referencial devidamente implementadas.
 - O modelo segue as boas práticas de modelagem de dados, com chaves compostas, normalização e documentação clara.
-
----
